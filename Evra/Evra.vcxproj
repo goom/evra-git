@@ -118,10 +118,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="defines.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="pugiconfig.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="FileIO.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="pugixml.cpp" />
     <ClCompile Include="Token.cpp" />
     <ClCompile Include="util.cpp" />
   </ItemGroup>
