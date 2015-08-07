@@ -2,12 +2,13 @@
 #include "pugixml.h"
 using namespace pugi;
 
-/* For future reference
+
 int save(Actor *a)
 {
 	xml_document doc;
 	xml_node n;
 
+	/*
 	n = doc.append_child("SAVE");
 		n.append_attribute("VER");
 		n.attribute("VER") = 1;
@@ -46,9 +47,9 @@ int save(Actor *a)
 				n = n.append_child(node_pcdata);
 					n.set_value(to_string(a->getStat(CON)).c_str());
 					n = n.parent().parent();
+	*/ //Saving for future reference
 
 	doc.save_file("save.xml", "\t", format_default | format_no_declaration);
 
 	return 1;
 }
-*/

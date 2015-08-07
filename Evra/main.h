@@ -5,60 +5,95 @@
 #include <fstream>
 #include <ctime>
 #include <random>
-#include <algorithm>
-#include "constants.h"
+#include "defines.h"
 using namespace std;
-
-constexpr short DEBUG = 1;
-
-struct Token
-{
-	Token() : kind(0), value(0), name("") { }
-
-	int kind;
-	double value;
-	string name;
-	Token(int ch) :kind(ch), value(0) { }
-	Token(int ch, double val) :kind(ch), value(val) { }
-	Token(int ch, string st) :kind(ch), name(st) { }
-};
-
-//Token.cpp
-class TokenStream
-{
-protected:
-	bool full;
-	Token buffer;
-public:
-	TokenStream() :full(0), buffer(0) { }
-
-	Token get();
-	void unget(Token t) { buffer = t; full = true; }
-
-	Token StrHandler(string& s);
-	void Clear(string& s);
-	void ignore(char);
-};
-//Token.cpp
-
 
 //Util.cpp
 int roll(int left, int right);
 int random(int hi, int lo = 1);
 void init_utilities();
-int State(int i);
-int State();
-void SetState(int i);
-string prompt();
 //Util.cpp
 
 
-//Calc.cpp
-double calc_proc(string& s);
-double calc_proc(TokenStream& ts, bool initial = false);
-//Calc.cpp
+//Token.cpp
+void calculate();
+double statement();
+double declaration();
+double expression();
+double term();
+double primary();
+
+struct Token
+{
+	char kind;
+	double value;
+	string name;
+	Token(char ch) :kind(ch), value(0) { }
+	Token(char ch, double val) :kind(ch), value(val) { }
+	Token(char ch, string st) :kind(ch), name(st) { }
+};
+
+class Token_stream
+{
+	bool full;
+	Token buffer;
+public:
+	Token_stream() :full(0), buffer(0) { }
+
+	Token get();
+	void unget(Token t) { buffer = t; full = true; }
+
+	void ignore(char);
+};
+
+struct Variable
+{
+	string name;
+	double value;
+	Variable(string n, double v) :name(n), value(v) { }
+};
+//Token.cpp
+
+//Actor.cpp
+class Actor;
+
+struct Packet
+{
+	Actor *owner;
+	//spell/effect/item owner as well
+
+	int hit, damage, crit;
+	int post_damage, post_hit;
+
+	int dam_type;
+};
+
+class Actor
+{
+	string name;
+	int health_current, health_max;
+	int level, experience;
+
+	int str, dex, intel, wis, cha, con;
+	int defense, hit, multi, armor;
 
 
-//Track.cpp
-int track_proc(TokenStream& ts);
-//Track.cpp
+public:
+	Actor();
+	Actor(string n);
+	~Actor() { }
+
+	int getStat(int stat, int flag = COMPOSITE);
+	int getMod(int x, int flag = COMPOSITE);
+	string getName() { return name; }
+
+	void defend(Packet *p);
+	void attack(Packet *p);
+};
+//Actor.cpp
+
+
+//FileIO.cpp
+int save(Actor *a);
+Actor load(string path = "save.xml");
+//FileIO.cpp
