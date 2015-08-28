@@ -120,11 +120,19 @@
   <ItemGroup>
     <ClInclude Include="constants.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="pugiconfig.h" />
+    <ClInclude Include="pugixml.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="FileIO.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="pugixml.cpp" />
     <ClCompile Include="Token.cpp" />
     <ClCompile Include="util.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md" />
+    <None Include="LICENSE" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

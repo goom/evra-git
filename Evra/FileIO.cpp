@@ -2,7 +2,7 @@
 #include "pugixml.h"
 using namespace pugi;
 
-
+/* For future reference
 int save(Actor *a)
 {
 	xml_document doc;
@@ -51,7 +51,4 @@ int save(Actor *a)
 
 	return 1;
 }
-
-
-
-//Puzzle movies: Exam, Fermat's Room
+*/

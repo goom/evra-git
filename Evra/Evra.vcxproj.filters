@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\PugiXML">
+      <UniqueIdentifier>{febead61-f265-41da-9b27-246c38e5cafb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PugiXML">
+      <UniqueIdentifier>{599e8b6a-274b-4dd4-b4cd-6d9695beb4da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -20,6 +26,12 @@
     </ClInclude>
     <ClInclude Include="constants.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pugiconfig.h">
+      <Filter>Header Files\PugiXML</Filter>
+    </ClInclude>
+    <ClInclude Include="pugixml.h">
+      <Filter>Header Files\PugiXML</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -32,5 +44,19 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FileIO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pugixml.cpp">
+      <Filter>Source Files\PugiXML</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LICENSE">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\README.md">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
