@@ -6,8 +6,13 @@ int main()
 	{
 		init_utilities();
 
-
-		calculate();
+		//calculate();
+		cout << Global::CON << endl;
+		
+		
+		cin.clear();
+		cout << "Press enter to continue...";
+		getchar();
 		return 0;
 	}
 	catch (exception& e)

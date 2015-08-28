@@ -5,6 +5,7 @@
 #include <fstream>
 #include <ctime>
 #include <random>
+#include "constants.h"
 using namespace std;
 
 constexpr short DEBUG = 1;
