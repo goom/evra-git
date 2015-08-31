@@ -13,28 +13,47 @@ int main()
 			cout << prompt();
 			getline(cin, s);
 
-			switch(State())
+			using namespace Tokens;
+			ts.Init(MainToken, s);
+			Token t = ts.get();
+			switch (t.kind)
 			{
-			case States::MAIN:
-				if (!main_proc(ts, s))
-					return 1;
+			case full_quit:
+			case quit:
+				return 0;
 				break;
-			case States::TRACKER:
-			case States::CALC:
-				switch (int(calc_proc(ts, s)))
+			case calc:
+				ts.Assign(CalcToken);
+				t = ts.get();
+				if (t.kind == eof)
 				{
-				case 0:
-					SetState(States::MAIN);
-					break;
-				case -1:
-					return 0;
-					break;
-				default:
-					break;
+					SetState(States::CALC);
+				}
+				else
+				{
+					ts.unget(t);
+					cout << "Calc = " << calc_proc(ts) << endl;
 				}
 				break;
+			case state:
+				cout << "Current state: " << State() << endl;
+				break;
+			case track:
+				SetState(States::TRACKER);
+				break;
 			default:
-				cout << "Unknown STATE" << endl;
+				switch (State())
+				{
+				case States::TRACKER:
+					track_proc(ts, s);
+					break;
+				case States::CALC:
+					calc_proc(ts, s);
+					break;
+				default:
+					cout << "Unknown STATE" << endl;
+					break;
+				}
 				break;
 			}
 		}
@@ -66,45 +85,6 @@ Token MainToken(string &s)
 	if (s == "qq") return Token(full_quit);
 	if (s == "calc") return Token(calc);
 	if (s == "state") return Token(state);
+	if (s == "track" || s == "tracker") return Token(track);
 	return Token(unknown);
-}
-
-int main_proc(TokenStream& ts, string& s)
-{
-	try
-	{
-		using namespace Tokens;
-		ts.Init(MainToken, s);
-		Token t = ts.get();
-		switch (t.kind)
-		{
-		case full_quit:
-		case quit:
-			return 0;
-			break;
-		case calc:
-			t = ts.get();
-			if (t.kind == eof)
-			{
-				SetState(States::CALC);
-				return 1;
-			}
-			else
-			{
-				s.erase(0, 5);
-				cout << "Calc = " << calc_proc(ts, s, true) << endl;
-			}
-			break;
-		case state:
-			cout << "Current state: " << State() << endl;
-			break;
-		default:
-			cout << "Unknown case in proc_main()" << endl;
-			break;
-		}
-	}
-	catch (runtime_error& e)
-	{
-		cerr << e.what() << endl;
-	}
 }

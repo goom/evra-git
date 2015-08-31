@@ -75,6 +75,12 @@ void TokenStream::Init(Token (*p)(string&), string& s)
 	tstream.clear();
 	tstream.str(s);
 	tstream.seekg(0, ios::beg);
+	full = false;
+	TokenRef = p;
+}
+
+void TokenStream::Assign(Token(*p)(string&))
+{
 	TokenRef = p;
 }
 

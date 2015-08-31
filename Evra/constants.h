@@ -55,13 +55,16 @@ namespace Tokens
 		constexpr int skip = 3;
 		constexpr int eof = 4;
 		constexpr int full_quit = 5;
+		constexpr int sort = 6;
+		constexpr int name = 7;
+		constexpr int clear = 8;
+		constexpr int init = 9;
 	}
 
 	namespace //Calc
 	{
-		constexpr int name = 100;
-		constexpr int dice = 101;
-		constexpr int let = 102;
+		constexpr int dice = 100;
+		constexpr int let = 101;
 	}
 
 	namespace //Main
@@ -73,6 +76,9 @@ namespace Tokens
 
 	namespace //Track
 	{
-
+		constexpr int list = 300;
+		constexpr int add = 301;
+		constexpr int reinit = 302;
+		constexpr int unsort = 303;
 	}
 }

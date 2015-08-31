@@ -5,6 +5,7 @@
 #include <fstream>
 #include <ctime>
 #include <random>
+#include <algorithm>
 #include "constants.h"
 using namespace std;
 
@@ -12,6 +13,8 @@ constexpr short DEBUG = 1;
 
 struct Token
 {
+	Token() : kind(0), value(0), name("") { }
+
 	int kind;
 	double value;
 	string name;
@@ -34,6 +37,7 @@ public:
 
 	Token(*TokenRef)(string& s);
 	void Init(Token(*p)(string&), string& s);
+	void Assign(Token(*p)(string&));
 	void ignore(char);
 };
 //Token.cpp
@@ -51,6 +55,8 @@ string prompt();
 
 
 //Calc.cpp
+Token CalcToken(string& s);
+double calc_proc(TokenStream& ts);
 double calc_proc(TokenStream& ts, string& s, bool b = false);
 
 struct Variable
@@ -63,9 +69,10 @@ struct Variable
 
 
 //Track.cpp
+Token TrackToken(string& s);
 int track_proc(TokenStream& ts, string& s);
 //Track.cpp
 
 //Main.cpp
-int main_proc(TokenStream& ts, string& s);
+Token MainToken(string& s);
 //Main.cpp
