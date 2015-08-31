@@ -5,18 +5,48 @@ namespace
 	typedef mt19937 RNG;
 	uint32_t seed_value;
 	RNG rng;
+	int STATE;
+}
+
+int State(int i)
+{
+	if (STATE == i)
+		return 1;
+	else
+		return 0;
+}
+
+int State()
+{
+	return STATE;
+}
+
+void SetState(int i)
+{
+	STATE = i;
 }
 
 void init_utilities()
 {
 	rng.seed(seed_value);
+	SetState(States::MAIN);
 }
 
-void printDebug(stringstream& db)
+string prompt()
 {
-	if(DEBUG)
-		cout << db.str() << endl;
+	switch(State())
+	{
+	case States::MAIN:
+		return string("Main> ");
+	case States::CALC:
+		return string("Calc> ");
+	case States::TRACKER:
+		return string("Trck> ");
+	default:
+		return string("> ");
+	}
 }
+
 
 int random(int hi, int lo)
 {

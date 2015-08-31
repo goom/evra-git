@@ -1,6 +1,12 @@
 #pragma once
 
 
+namespace States
+{
+	constexpr int CALC = 1;
+	constexpr int TRACKER = 2;
+	constexpr int MAIN = 3;
+}
 
 namespace Global
 {
@@ -36,5 +42,37 @@ namespace Global
 			constexpr int CHA = 5;
 			constexpr int CHARISMA = CHA;
 		}
+	}
+}
+
+namespace Tokens
+{
+	namespace //Global tokens
+	{
+		constexpr int unknown = 0;
+		constexpr int quit = 1;
+		constexpr int number = 2;
+		constexpr int skip = 3;
+		constexpr int eof = 4;
+		constexpr int full_quit = 5;
+	}
+
+	namespace //Calc
+	{
+		constexpr int name = 100;
+		constexpr int dice = 101;
+		constexpr int let = 102;
+	}
+
+	namespace //Main
+	{
+		constexpr int calc = 200;
+		constexpr int track = 201;
+		constexpr int state = 202;
+	}
+
+	namespace //Track
+	{
+
 	}
 }
