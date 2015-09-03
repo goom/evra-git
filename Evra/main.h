@@ -35,9 +35,9 @@ public:
 	Token get();
 	void unget(Token t) { buffer = t; full = true; }
 
-	Token(*TokenRef)(string& s);
-	void Init(Token(*p)(string&), string& s);
-	void Assign(Token(*p)(string&));
+	Token StrHandler(string& s);
+	void Clear(string& s);
+	void Assign(Token (*p)(string&));
 	void ignore(char);
 };
 //Token.cpp
@@ -55,24 +55,11 @@ string prompt();
 
 
 //Calc.cpp
-Token CalcToken(string& s);
-double calc_proc(TokenStream& ts);
-double calc_proc(TokenStream& ts, string& s, bool b = false);
-
-struct Variable
-{
-	string name;
-	double value;
-	Variable(string n, double v) :name(n), value(v) { }
-};
+double calc_proc(string& s);
+double calc_proc(TokenStream& ts, bool initial = false);
 //Calc.cpp
 
 
 //Track.cpp
-Token TrackToken(string& s);
-int track_proc(TokenStream& ts, string& s);
+int track_proc(TokenStream& ts);
 //Track.cpp
-
-//Main.cpp
-Token MainToken(string& s);
-//Main.cpp

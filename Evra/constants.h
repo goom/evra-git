@@ -59,6 +59,8 @@ namespace Tokens
 		constexpr int name = 7;
 		constexpr int clear = 8;
 		constexpr int init = 9;
+		constexpr int remove = 10;
+		constexpr int reset = 11;
 	}
 
 	namespace //Calc

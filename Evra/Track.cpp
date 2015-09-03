@@ -1,10 +1,8 @@
 #include "main.h"
 
 
-
 namespace
 {
-	bool sorted = false;
 	struct Track
 	{
 		Track() : name(""), initiative(0), hp(0) {}
@@ -24,7 +22,7 @@ namespace
 		}
 	} cSort;
 
-	void List()
+	void List(bool sorted = false)
 	{
 		if (sorted)
 		{
@@ -36,7 +34,7 @@ namespace
 			int i = 0;
 			for (auto c : l_sorted)
 			{
-				cout << i << ") " << c.name << " (Init " << c.initiative << ") " << c.hp << endl;
+				cout << c.name << " (Init " << c.initiative << ") " << c.hp << endl;
 				i++;
 			}
 		}
@@ -50,7 +48,7 @@ namespace
 			int i = 0;
 			for (auto c : l)
 			{
-				cout << i << ") " << c.name << " (Init " << c.initiative << ") " << c.hp << endl;
+				cout << i + 1 << ") " << c.name << " (Init " << c.initiative << ") " << c.hp << endl;
 				i++;
 			}
 		}
@@ -69,14 +67,19 @@ namespace
 				temp.name = t.name;
 				break;
 			case Tokens::number:
-				temp.initiative = t.value;
+			case Tokens::dice:
+				ts.unget(t);
+				temp.initiative = calc_proc(ts);
+				break;
+			case ',':
+				cout << temp.name << " added." << endl;
+				l.push_back(temp);
+				temp.initiative = 0;
+				temp.name = "NONAME";
 				break;
 			case Tokens::eof:
 				cout << temp.name << " added." << endl;
-				if (sorted)
-					l_sorted.push_back(temp);
-				else
-					l.push_back(temp);
+				l.push_back(temp);
 				return;
 			default:
 				cout << "Unknown value passed in Add()" << endl;
@@ -89,95 +92,112 @@ namespace
 	{
 		Token t = ts.get();
 		Track temp;
+		t.value -= 1;
 		int track = t.value;
-		if (sorted)
+		if (t.value >= l.size())
 		{
-			if (t.value >= l_sorted.size())
+			cout << "Number in EditTrack() > number of elements in list" << endl;
+			return;
+		}
+		temp = l[t.value];
+		while (true)
+		{
+			t = ts.get();
+			switch (t.kind)
 			{
-				cout << "Number in EditTrack() > number of elements in l_sorted" << endl;
+			case Tokens::number:
+			case '(':
+			case '+':
+			case '-':
+				ts.unget(t);
+				temp.hp += calc_proc(ts);
+				break;
+			case Tokens::clear:
+				temp.initiative = temp.hp = 0;
+				break;
+			case Tokens::reinit:
+			case Tokens::init:
+				temp.initiative = calc_proc(ts);
+				break;
+			case Tokens::remove:
+				l.erase(l.begin() + track);
 				return;
-			}
-			temp = l_sorted[t.value];
-		}
-		else
-		{
-			if (t.value >= l.size())
-			{
-				cout << "Number in EditTrack() > number of elements in l" << endl;
+			case ',':
+				break;
+			case Tokens::eof:
+				l[track] = temp;
 				return;
+			default:
+				cout << "Unknown token passed to EditTrack()" << endl;
 			}
-			temp = l[t.value];
 		}
-		t = ts.get();
-		switch (t.kind)
+	}
+
+	void ResetList()
+	{
+		for (auto& i : l)
+			i.hp = i.initiative = 0;
+	}
+
+	void ListSort(TokenStream& ts, bool un = false)
+	{
+		l_sorted = l;
+		std::sort(l_sorted.begin(), l_sorted.end(), cSort);
+		List(true);
+	}
+
+	void ReInit(TokenStream& ts)
+	{
+		string s;
+		for (auto& i : l)
 		{
-		case Tokens::number:
-		case '-':
-			ts.unget(t);
-			temp.hp += calc_proc(ts);
-			break;;
-		case Tokens::clear:
-			temp.initiative = temp.hp = 0;
-			break;
-		case Tokens::reinit:
-		case Tokens::init:
-			temp.initiative = calc_proc(ts);
-			break;
+			cout << "Enter initiative for " << i.name << ": ";
+			getline(cin, s);
+			i.initiative = calc_proc(s);
 		}
-		if (sorted)
-			l_sorted[track] = temp;
-		else
-			l[track] = temp;
+	}
+
+	void DelTrack(TokenStream& ts)
+	{
+
 	}
 }
 
-Token TrackToken(string& s)
-{
-	using namespace Tokens;
-	if (s == "add") return Token(add);
-	if (s == "list") return Token(list);
-	if (s == "sort") return Token(Tokens::sort);
-	if (s == "unsort") return Token(unsort);
-	if (s == "reinit") return Token(reinit);
-	if (s == "init") return Token(init);
-	if (s == "clear") return Token(clear);
-	return Token(name, s);	
-}
-
-int track_proc(TokenStream& ts, string& s)
+int track_proc(TokenStream& ts)
 {
 	try
 	{
 		using namespace Tokens;
-		ts.Init(TrackToken, s);
 		Token t = ts.get();
 		switch (t.kind)
 		{
 		case list:
 			List();
-			return 1;
+			break;
 		case Tokens::add:
 			Add(ts);
-			return 1;
+			break;
 		case Tokens::sort:
-			l_sorted = l;
-			std::sort(l_sorted.begin(), l_sorted.end(), cSort);
-			sorted = true;
-			List();
-			return 1;
-		case unsort:
-			l = l_sorted;
-			sorted = false;
-			List();
-			return 1;
+			ListSort(ts);
+			break;
 		case number:
 			ts.unget(t);
 			EditTrack(ts);
-			return 1;
+			break;
+		case reset:
+			ResetList();
+			break;
+		case Tokens::remove:
+			DelTrack(ts);
+			break;
+		case init:
+			ReInit(ts);
+			break;
 		default:
-			cout << "No such type in track_proc()" << endl;
-			return 1;
+			cout << "No such command in TRCK." << endl;
+			break;
 		}
+		return 1;
 	}
 	catch (runtime_error& e)
 	{

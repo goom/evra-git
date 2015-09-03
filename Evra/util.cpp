@@ -2,9 +2,7 @@
 
 namespace
 {
-	typedef mt19937 RNG;
-	uint32_t seed_value;
-	RNG rng;
+	mt19937 rng;
 	int STATE;
 }
 
@@ -28,7 +26,7 @@ void SetState(int i)
 
 void init_utilities()
 {
-	rng.seed(seed_value);
+	rng.seed(time(NULL));
 	SetState(States::MAIN);
 }
 

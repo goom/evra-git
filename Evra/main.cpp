@@ -6,15 +6,15 @@ int main()
 	try
 	{
 		string s;
-		init_utilities();
 		TokenStream ts;
+		init_utilities();
 		while (true)
 		{
 			cout << prompt();
 			getline(cin, s);
 
 			using namespace Tokens;
-			ts.Init(MainToken, s);
+			ts.Clear(s);
 			Token t = ts.get();
 			switch (t.kind)
 			{
@@ -23,12 +23,9 @@ int main()
 				return 0;
 				break;
 			case calc:
-				ts.Assign(CalcToken);
 				t = ts.get();
 				if (t.kind == eof)
-				{
 					SetState(States::CALC);
-				}
 				else
 				{
 					ts.unget(t);
@@ -41,15 +38,22 @@ int main()
 			case track:
 				SetState(States::TRACKER);
 				break;
+			case clear:
+				//I know shouldn't do this. Go die.
+				system("cls");
+				break;
 			default:
+				ts.Clear(s);
 				switch (State())
 				{
 				case States::TRACKER:
-					track_proc(ts, s);
+					track_proc(ts);
 					break;
 				case States::CALC:
-					calc_proc(ts, s);
+					calc_proc(ts, true);
 					break;
+				case States::MAIN:
+					cout << "No such command in MAIN." << endl;
 				default:
 					cout << "Unknown STATE" << endl;
 					break;
@@ -76,15 +80,4 @@ int main()
 		while (cin >> c && c != ';');
 		return 2;
 	}
-}
-
-Token MainToken(string &s)
-{
-	using namespace Tokens;
-	if (s == "quit" || s == "q" || s == "exit") return Token(quit);
-	if (s == "qq") return Token(full_quit);
-	if (s == "calc") return Token(calc);
-	if (s == "state") return Token(state);
-	if (s == "track" || s == "tracker") return Token(track);
-	return Token(unknown);
 }

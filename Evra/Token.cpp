@@ -5,8 +5,6 @@ using namespace Tokens;
 namespace
 {
 	stringstream tstream;
-	TokenStream ts;
-	vector<Variable> names;
 }
 
 Token TokenStream::get()
@@ -31,6 +29,9 @@ Token TokenStream::get()
 	case '%':
 	case ';':
 	case '=':
+	case ',':
+	case '!':
+	case '/;':
 		return Token(ch);
 	case '.':
 	case '0':
@@ -56,32 +57,40 @@ Token TokenStream::get()
 		{
 			cout << "Bad value passed in TokenStream.get()" << ch << "(" << int(ch) << ")" << endl;
 			ch = skip;
-			return Token(skip);
+			return Token(eof);
 		}
 		if (isalpha(ch))
 		{
-			string s;
+			string s, test;
 			s = ch;
-			while (tstream.get(ch) && isalpha(ch)) s += ch;
+			while (tstream.get(ch))
+			{
+				if (isalpha(ch))
+					s += ch;
+				else
+					if (isalnum(ch))
+					{
+						if (s == "d")
+							break;
+						s += ch;
+					}
+					else
+						break;
+			}
 			tstream.unget();
-			return TokenRef(s);
+			return StrHandler(s);
 		}
 		cout << "Error: Bad token" << endl;
+		return Token(unknown);
 	}
 }
 
-void TokenStream::Init(Token (*p)(string&), string& s)
+void TokenStream::Clear(string& s)
 {
 	tstream.clear();
 	tstream.str(s);
 	tstream.seekg(0, ios::beg);
 	full = false;
-	TokenRef = p;
-}
-
-void TokenStream::Assign(Token(*p)(string&))
-{
-	TokenRef = p;
 }
 
 void TokenStream::ignore(char c)
@@ -96,4 +105,25 @@ void TokenStream::ignore(char c)
 	char ch;
 	while (tstream >> ch)
 		if (ch == c) return;
+}
+
+Token TokenStream::StrHandler(string &s)
+{
+	using namespace Tokens;
+	if (s == "quit" || s == "q" || s == "exit") return Token(quit);
+	if (s == "qq") return Token(full_quit);
+	if (s == "calc") return Token(calc);
+	if (s == "state") return Token(state);
+	if (s == "track" || s == "tracker") return Token(track);
+	if (s == "clear" || s == "cls") return Token(clear);
+	if (s == "add") return Token(add);
+	if (s == "list") return Token(list);
+	if (s == "sort") return Token(Tokens::sort);
+	if (s == "reinit") return Token(reinit);
+	if (s == "init") return Token(init);
+	if (s == "reset") return Token(reset);
+	if (s == "remove" || s == "del" || s == "delete") return Token(Tokens::remove);
+	if (s == "d") return Token(dice);
+	if (s == "let") return Token(let);
+	return Token(name, s);
 }
