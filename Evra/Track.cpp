@@ -5,11 +5,12 @@ namespace
 {
 	struct Track
 	{
-		Track() : name(""), initiative(0), hp(0) {}
+		Track() : name("NONAME"), initiative(0), hp(0), order(0) {}
 
 		string name;
 		int initiative;
 		int hp;
+		int order;
 	};
 
 	vector<Track> l, l_sorted;
@@ -65,6 +66,10 @@ namespace
 			{
 			case Tokens::name:
 				temp.name = t.name;
+				if (l.size() < 1)
+					temp.order = 1;
+				else
+					temp.order = l.back().order + 1;
 				break;
 			case Tokens::number:
 			case Tokens::dice:
@@ -92,8 +97,7 @@ namespace
 	{
 		Token t = ts.get();
 		Track temp;
-		t.value -= 1;
-		int track = t.value;
+		int track = --t.value;
 		if (t.value >= l.size())
 		{
 			cout << "Number in EditTrack() > number of elements in list" << endl;
@@ -105,12 +109,16 @@ namespace
 			t = ts.get();
 			switch (t.kind)
 			{
-			case Tokens::number:
 			case '(':
 			case '+':
 			case '-':
 				ts.unget(t);
 				temp.hp += calc_proc(ts);
+				break;
+			case Tokens::number:
+			case Tokens::dice:
+				ts.unget(t);
+				temp.hp = calc_proc(ts);
 				break;
 			case Tokens::clear:
 				temp.initiative = temp.hp = 0;
@@ -123,6 +131,20 @@ namespace
 				l.erase(l.begin() + track);
 				return;
 			case ',':
+				l[track] = temp;
+				t = ts.get();
+				if (t.kind != Tokens::number)
+				{
+					cout << "Invalid commant format in EditTrack()" << endl;
+					return;
+				}
+				track = --t.value;
+				if (t.value >= l.size())
+				{
+					cout << "Number in EditTrack() > number of elements in list" << endl;
+					return;
+				}
+				temp = l[track];
 				break;
 			case Tokens::eof:
 				l[track] = temp;
@@ -139,11 +161,12 @@ namespace
 			i.hp = i.initiative = 0;
 	}
 
-	void ListSort(TokenStream& ts, bool un = false)
+	void ListSort(bool un = true)
 	{
 		l_sorted = l;
 		std::sort(l_sorted.begin(), l_sorted.end(), cSort);
-		List(true);
+		if (un)
+			List(true);
 	}
 
 	void ReInit(TokenStream& ts)
@@ -159,7 +182,54 @@ namespace
 
 	void DelTrack(TokenStream& ts)
 	{
-
+		using namespace Tokens;
+		Token t;
+		vector<int> vals;
+		vector<Track> temp;
+		int iter = 0;
+		while (true)
+		{
+			t = ts.get();
+			switch (t.kind)
+			{
+			case eof:
+				for (auto z : l)
+				{
+					if (find(vals.begin(), vals.end(), z.order) == vals.end())
+						temp.push_back(z);
+				}
+				iter = 1;
+				for (auto& z : temp)
+					z.order = iter++;
+				l = temp;
+				ListSort(false);
+				return;
+			case ',':
+				break;
+			case number:
+				vals.push_back(t.value);
+				t = ts.get();
+				if (t.kind == '-')
+				{
+					t = ts.get();
+					if (t.kind == number)
+					{
+						for (int i = vals.at(vals.size() - 1) + 1; i <= t.value; i++)
+						{
+							vals.push_back(i);
+						}
+					}
+					else
+						ts.unget(t);
+				}
+				else
+					ts.unget(t);
+				break;
+			default:
+				cout << "Unknown token in DelTrack()" << endl;
+				break;
+			}
+		}
 	}
 }
 
@@ -178,7 +248,7 @@ int track_proc(TokenStream& ts)
 			Add(ts);
 			break;
 		case Tokens::sort:
-			ListSort(ts);
+			ListSort();
 			break;
 		case number:
 			ts.unget(t);

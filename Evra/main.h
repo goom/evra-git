@@ -37,7 +37,6 @@ public:
 
 	Token StrHandler(string& s);
 	void Clear(string& s);
-	void Assign(Token (*p)(string&));
 	void ignore(char);
 };
 //Token.cpp

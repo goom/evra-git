@@ -49,12 +49,12 @@ namespace Tokens
 {
 	namespace //Global tokens
 	{
-		constexpr int unknown = 0;
+		constexpr int unknown = 0; //unused
 		constexpr int quit = 1;
 		constexpr int number = 2;
-		constexpr int skip = 3;
+		constexpr int skip = 3; //mostly unused
 		constexpr int eof = 4;
-		constexpr int full_quit = 5;
+		constexpr int full_quit = 5; //mostly unused
 		constexpr int sort = 6;
 		constexpr int name = 7;
 		constexpr int clear = 8;
