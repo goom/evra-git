@@ -61,10 +61,12 @@ int roll(int left, int right)
 		single = random(right);
 		if (single == right)
 		{
+			cout << "Critical on d" << right << endl;
 			//critical
 		}
 		else if (single == 1)
 		{
+			cout << "Fumble on d" << right << endl;
 			//fumble
 		}
 		sum += single;
