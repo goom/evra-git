@@ -7,9 +7,8 @@
 #include <random>
 #include <algorithm>
 #include "constants.h"
+#include "pugixml.h"
 using namespace std;
-
-constexpr short DEBUG = 1;
 
 struct Token
 {
@@ -62,3 +61,9 @@ double calc_proc(TokenStream& ts, bool initial = false);
 //Track.cpp
 int track_proc(TokenStream& ts);
 //Track.cpp
+
+
+//Notes.cpp
+int notes_proc(TokenStream& ts);
+//Notes.cpp
+

@@ -74,6 +74,7 @@ namespace Tokens
 		constexpr int calc = 200;
 		constexpr int track = 201;
 		constexpr int state = 202;
+		constexpr int notes = 203;
 	}
 
 	namespace //Track

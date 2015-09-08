@@ -126,6 +126,7 @@
   <ItemGroup>
     <ClCompile Include="FileIO.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Notes.cpp" />
     <ClCompile Include="Token.cpp" />
     <ClCompile Include="Track.cpp" />
     <ClCompile Include="pugixml.cpp" />
