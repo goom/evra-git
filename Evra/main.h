@@ -67,3 +67,8 @@ int track_proc(TokenStream& ts);
 int notes_proc(TokenStream& ts);
 //Notes.cpp
 
+
+//Character.cpp
+class Character;
+//Character.cpp
+
