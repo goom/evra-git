@@ -3,9 +3,9 @@
 
 namespace States
 {
-	constexpr int CALC = 1;
-	constexpr int TRACKER = 2;
-	constexpr int MAIN = 3;
+	constexpr short CALC = 1;
+	constexpr short TRACKER = 2;
+	constexpr short MAIN = 3;
 }
 
 namespace Global
@@ -15,32 +15,77 @@ namespace Global
 		constexpr short LO = 0;
 		constexpr short LOW = LO;
 		constexpr short MIN = LO;
+		constexpr short BASE = LO;
 		constexpr short HI = 1;
 		constexpr short HIGH = HI;
 		constexpr short MAX = HI;
+		constexpr short COMP = 2;
+		constexpr short COMPOSITE = COMP;
 	}
 
 	namespace //Character Sheet
 	{
+		namespace //Classes
+		{
+			constexpr short BARBARIAN = 1;
+			constexpr short BARD = 2;
+			constexpr short CLERIC = 3;
+			constexpr short DRUID = 4;
+			constexpr short FIGHTER = 5;
+			constexpr short MONK = 6;
+			constexpr short PALADIN = 7;
+			constexpr short RANGER = 8;
+			constexpr short ROGUE = 9;
+			constexpr short SORCERER = 10;
+			constexpr short WARLOCK = 11;
+			constexpr short WIZARD = 12;
+		}
 		namespace //Stats
 		{
-			constexpr int STR = 0;
-			constexpr int STRENGTH = STR;
+			constexpr short STR = 0;
+			constexpr short STRENGTH = STR;
 
-			constexpr int DEX = 1;
-			constexpr int DEXTERITY = DEX;
+			constexpr short DEX = 1;
+			constexpr short DEXTERITY = DEX;
 
-			constexpr int WIS = 2;
-			constexpr int WISDOM = WIS;
+			constexpr short WIS = 2;
+			constexpr short WISDOM = WIS;
 
-			constexpr int INT = 3;
-			constexpr int INTELLIGENCE = INT;
+			constexpr short INT = 3;
+			constexpr short INTELLIGENCE = INT;
 
-			constexpr int CON = 4;
-			constexpr int CONSTITUTION = CON;
+			constexpr short CON = 4;
+			constexpr short CONSTITUTION = CON;
 
-			constexpr int CHA = 5;
-			constexpr int CHARISMA = CHA;
+			constexpr short CHA = 5;
+			constexpr short CHARISMA = CHA;
+
+			constexpr short HP = 6;
+			constexpr short HEALTH = HP;
+
+			constexpr short AC = 7;
+			constexpr short ARMORCLASS = AC;
+		}
+		namespace //Skills
+		{
+			constexpr short ACROBATICS = 100;
+			constexpr short ANIMALHANDLING = 101;
+			constexpr short ARCANA = 102;
+			constexpr short ATHLETICS = 103;
+			constexpr short DECEPTION = 104;
+			constexpr short HISTORY = 105;
+			constexpr short INSIGHT = 106;
+			constexpr short INTIMIDATION = 107;
+			constexpr short INVESTIGATION = 108;
+			constexpr short MEDICINE = 109;
+			constexpr short NATURE = 110;
+			constexpr short PERCEPTION = 111;
+			constexpr short PERFORMANCE = 112;
+			constexpr short PERSUASION = 113;
+			constexpr short RELIGION = 114;
+			constexpr short SLEIGHTOFHAND = 115;
+			constexpr short STEALTH = 116;
+			constexpr short SURVIVAL = 117;
 		}
 	}
 }
@@ -49,39 +94,39 @@ namespace Tokens
 {
 	namespace //Global tokens
 	{
-		constexpr int unknown = 0; //unused
-		constexpr int quit = 1;
-		constexpr int number = 2;
-		constexpr int skip = 3; //mostly unused
-		constexpr int eof = 4;
-		constexpr int full_quit = 5; //mostly unused
-		constexpr int sort = 6;
-		constexpr int name = 7;
-		constexpr int clear = 8;
-		constexpr int init = 9;
-		constexpr int remove = 10;
-		constexpr int reset = 11;
+		constexpr short unknown = 0; //unused
+		constexpr short quit = 1;
+		constexpr short number = 2;
+		constexpr short skip = 3; //mostly unused
+		constexpr short eof = 4;
+		constexpr short full_quit = 5; //mostly unused
+		constexpr short sort = 6;
+		constexpr short name = 7;
+		constexpr short clear = 8;
+		constexpr short init = 9;
+		constexpr short remove = 10;
+		constexpr short reset = 11;
 	}
 
 	namespace //Calc
 	{
-		constexpr int dice = 100;
-		constexpr int let = 101;
+		constexpr short dice = 100;
+		constexpr short let = 101;
 	}
 
 	namespace //Main
 	{
-		constexpr int calc = 200;
-		constexpr int track = 201;
-		constexpr int state = 202;
-		constexpr int notes = 203;
+		constexpr short calc = 200;
+		constexpr short track = 201;
+		constexpr short state = 202;
+		constexpr short notes = 203;
 	}
 
 	namespace //Track
 	{
-		constexpr int list = 300;
-		constexpr int add = 301;
-		constexpr int reinit = 302;
-		constexpr int unsort = 303;
+		constexpr short list = 300;
+		constexpr short add = 301;
+		constexpr short reinit = 302;
+		constexpr short unsort = 303;
 	}
 }

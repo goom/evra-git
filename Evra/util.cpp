@@ -56,6 +56,11 @@ int roll(int left, int right)
 {
 	int sum = 0;
 	int single = 0;
+	int neg = 0;
+
+	if (left < 0)
+		neg = 1;
+
 	for (int i = 0; i < left; i++)
 	{
 		single = random(right);
@@ -72,6 +77,9 @@ int roll(int left, int right)
 		sum += single;
 		single = 0;
 	}
+
+	if (neg)
+		return -sum;
 
 	return sum;
 }

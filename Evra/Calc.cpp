@@ -169,6 +169,11 @@ namespace
 	}
 }
 
+double calc_proc(const char* c)
+{
+	return calc_proc(string(c));
+}
+
 double calc_proc(string& s)
 {
 	TokenStream ts;

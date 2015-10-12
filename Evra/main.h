@@ -54,6 +54,7 @@ string prompt();
 
 //Calc.cpp
 double calc_proc(string& s);
+double calc_proc(const char* c);
 double calc_proc(TokenStream& ts, bool initial = false);
 //Calc.cpp
 
@@ -69,6 +70,33 @@ int notes_proc(TokenStream& ts);
 
 
 //Character.cpp
-class Character;
+class Character
+{
+	string sName;
+	int iLevel, iRace, iClass, iAlignment;
+	int iSpeed, iSize, iHeight, iWeight;
+	int iBackground;
+	long long iExperience;
+
+	int iStrength, iDexterity, iConstitution, iIntelligence, iWisdom, iCharisma;
+	int iHealthBase, iHealthCurrent;
+	int iBaseAC;
+
+	//Inventory, Effects
+	//Personality Traits
+	//Ideals, Bonds, Flaws
+
+public:
+	Character() { }
+	
+	int proficiencyBonus();
+	int proficient(int id);
+	int getStat(int stat, int base = Global::COMP);
+	int getStatMod(int stat, int base = Global::COMP);
+	int savingThrow(int stat); 
+	//int savingThrow(int stat, Packet &p);
+	int skillCheck(int skill);
+	//int skillCheck(int skill, SkillPacket &p);
+};
 //Character.cpp
 
