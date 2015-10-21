@@ -106,7 +106,7 @@ namespace
 			case '/':
 			{
 				double d = primary(ts);
-				if (d == 0) cout << "error, divide by zero" << endl;
+				throw runtime_error("divide by zero in term()");
 				left /= d;
 				break;
 			}

@@ -1,132 +1,167 @@
 #pragma once
 
+//Enum max (int) is ~2.1b
 
 namespace States
 {
-	constexpr short CALC = 1;
-	constexpr short TRACKER = 2;
-	constexpr short MAIN = 3;
+	enum
+	{
+		CALC,
+		TRACKER,
+		MAIN,
+	};
 }
 
 namespace Global
 {
-	namespace //Utility
+	enum
 	{
-		constexpr short LO = 0;
-		constexpr short LOW = LO;
-		constexpr short MIN = LO;
-		constexpr short BASE = LO;
-		constexpr short HI = 1;
-		constexpr short HIGH = HI;
-		constexpr short MAX = HI;
-		constexpr short COMP = 2;
-		constexpr short COMPOSITE = COMP;
-	}
+		//Normal Globals
+		LO, LOW = LO, MIN = LO, BASE = LO,
+		HI, HIGH = HI, MAX = HI,
+		COMP, COMPOSITE = COMP,
 
-	namespace //Character Sheet
-	{
-		namespace //Classes
-		{
-			constexpr short BARBARIAN = 1;
-			constexpr short BARD = 2;
-			constexpr short CLERIC = 3;
-			constexpr short DRUID = 4;
-			constexpr short FIGHTER = 5;
-			constexpr short MONK = 6;
-			constexpr short PALADIN = 7;
-			constexpr short RANGER = 8;
-			constexpr short ROGUE = 9;
-			constexpr short SORCERER = 10;
-			constexpr short WARLOCK = 11;
-			constexpr short WIZARD = 12;
-		}
-		namespace //Stats
-		{
-			constexpr short STR = 0;
-			constexpr short STRENGTH = STR;
+		//Class
+		BARBARIAN,
+		BARD,
+		CLERIC,
+		DRUID,
+		FIGHTER,
+		MONK,
+		PALADIN,
+		RANGER,
+		ROGUE,
+		SORCERER,
+		WARLOCK,
+		WIZARD,
 
-			constexpr short DEX = 1;
-			constexpr short DEXTERITY = DEX;
+		//Character Sheet
+		STR, STRENGTH = STR,
+		DEX, DEXTERITY = DEX,
+		WIS, WISDOM = WIS,
+		INT, INTELLIGENCE = INT,
+		CON, CONSTITUTION = CON,
+		CHA, CHARISMA = CHA,
+		HP, HEALTH = HP,
+		AC, ARMORCLASS = AC,
+		SIZE,
+		HEIGHT,
+		WEIGHT,
+		SPEED,
 
-			constexpr short WIS = 2;
-			constexpr short WISDOM = WIS;
+		//Misc
+		BACKGROUND,
+		ALIGNMENT,
+		FEAT,
+		TRAIT,
+		PASSIVE,
+		MAGIC, MAGICAL = MAGIC,
+		PHYSICAL,
+		ARCANE,
+		DIVINE,
+		RACE,
+		CLASS,
+		ITEM,
 
-			constexpr short INT = 3;
-			constexpr short INTELLIGENCE = INT;
+		//Damage Types
+		BLUDGEONING, BLUNT = BLUDGEONING, BLUDGEON = BLUNT, CRUSH = BLUNT, CRUSHING = BLUNT,
+		SLASHING, SLASH = SLASHING,
+		PIERCING, PIERCE = PIERCING,
+		FIRE, FLAME = FIRE, HEAT = FIRE,
+		COLD, ICE = COLD,
+		ELECTRIC, ELECTRICITY = ELECTRIC, LIGHTNING = ELECTRIC,
+		FORCE,
+		RADIANT, HOLY = RADIANT,
+		NECROTIC, UNHOLY = NECROTIC,
+		POISON,
+		SONIC, THUNDER = SONIC, SOUND = SONIC,
 
-			constexpr short CON = 4;
-			constexpr short CONSTITUTION = CON;
+		//Skills
+		ACROBATICS,
+		ANIMALHANDLING,
+		ARCANA,
+		ATHLETICS,
+		DECEPTION,
+		HISTORY,
+		INSIGHT,
+		INTIMIDATION,
+		INVESTIGATION,
+		MEDICINE,
+		NATURE,
+		PERCEPTION,
+		PERFORMANCE,
+		PERSUASION,
+		RELIGION,
+		SLEIGHTOFHAND,
+		STEALTH,
+		SURVIVAL,
 
-			constexpr short CHA = 5;
-			constexpr short CHARISMA = CHA;
+		//Backgrounds
+		ACOLYTE,
 
-			constexpr short HP = 6;
-			constexpr short HEALTH = HP;
+		//Alignments
+		TN, TRUENEUTRAL = TN,
+		LN, LAWFULNEUTRAL = LN,
+		CN, CHAOTICNEUTRAL = CN,
+		NE, NEUTRALEVIL = NE,
+		LE, LAWFULEVIL = LE,
+		CE, CHAOTICEVIL = CE,
+		NG, NEUTRALGOOD = NG,
+		LG, LAWFULGOOD = LG,
+		CG, CHAOTICGOOD = CG,
 
-			constexpr short AC = 7;
-			constexpr short ARMORCLASS = AC;
-		}
-		namespace //Skills
-		{
-			constexpr short ACROBATICS = 100;
-			constexpr short ANIMALHANDLING = 101;
-			constexpr short ARCANA = 102;
-			constexpr short ATHLETICS = 103;
-			constexpr short DECEPTION = 104;
-			constexpr short HISTORY = 105;
-			constexpr short INSIGHT = 106;
-			constexpr short INTIMIDATION = 107;
-			constexpr short INVESTIGATION = 108;
-			constexpr short MEDICINE = 109;
-			constexpr short NATURE = 110;
-			constexpr short PERCEPTION = 111;
-			constexpr short PERFORMANCE = 112;
-			constexpr short PERSUASION = 113;
-			constexpr short RELIGION = 114;
-			constexpr short SLEIGHTOFHAND = 115;
-			constexpr short STEALTH = 116;
-			constexpr short SURVIVAL = 117;
-		}
-	}
+		//Races
+		HUMAN,
+		DWARF,
+		HALFLING,
+		ELF,
+		HALFELF,
+		HALFORC,
+		GNOME,
+		TEIFLING,
+
+		//Effects
+		EFFECT_ADD_STAT,
+		EFFECT_ADD_STAT_MOD,
+		EFFECT_ADD_PROFICIENCY,
+		EFFECT_ADD_PROFICIENCY_BONUS,
+		EFFECT_ADD_DAMAGE_RESISTANCE,
+		EFFECT_ADD_DAMAGE_IMMUNITY,
+		EFFECT_ADD_CONDITION_IMMUNITY,
+	};
 }
 
 namespace Tokens
 {
-	namespace //Global tokens
+	enum //Global tokens
 	{
-		constexpr short unknown = 0; //unused
-		constexpr short quit = 1;
-		constexpr short number = 2;
-		constexpr short skip = 3; //mostly unused
-		constexpr short eof = 4;
-		constexpr short full_quit = 5; //mostly unused
-		constexpr short sort = 6;
-		constexpr short name = 7;
-		constexpr short clear = 8;
-		constexpr short init = 9;
-		constexpr short remove = 10;
-		constexpr short reset = 11;
-	}
+		unknown, //unused
+		quit,
+		number,
+		skip, //mostly unused
+		eof,
+		full_quit, //mostly unused
+		sort,
+		name,
+		clear,
+		init,
+		remove,
+		reset,
 
-	namespace //Calc
-	{
-		constexpr short dice = 100;
-		constexpr short let = 101;
-	}
+		//Calc
+		dice,
+		let,
 
-	namespace //Main
-	{
-		constexpr short calc = 200;
-		constexpr short track = 201;
-		constexpr short state = 202;
-		constexpr short notes = 203;
-	}
+		//Main
+		calc,
+		track,
+		state,
+		notes,
 
-	namespace //Track
-	{
-		constexpr short list = 300;
-		constexpr short add = 301;
-		constexpr short reinit = 302;
-		constexpr short unsort = 303;
-	}
+		//Track
+		list,
+		add,
+		reinit,
+		unsort,
+	};
 }

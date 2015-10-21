@@ -6,6 +6,41 @@ namespace
 	int STATE;
 }
 
+
+int Keywords::inList(int i)
+{
+	for (auto &x : l)
+	{
+		if (x == i)
+			return 1;
+	}
+
+	return 0;
+}
+
+void Keywords::add(int i)
+{
+	l.push_back(i);
+}
+
+void Keywords::remove(int x)
+{
+	for (int i = 0; i < l.size(); i++)
+	{
+		if (l.at(i) == x)
+		{
+			l.erase(l.begin() + i);
+			return;
+		}
+	}
+}
+
+long long genID()
+{
+	static long long x = 0;
+	return x++;
+}
+
 int State(int i)
 {
 	if (STATE == i)
@@ -64,7 +99,7 @@ int roll(int left, int right)
 	for (int i = 0; i < left; i++)
 	{
 		single = random(right);
-		if (single == right)
+/*		if (single == right)
 		{
 			cout << "Critical on d" << right << endl;
 			//critical
@@ -73,7 +108,7 @@ int roll(int left, int right)
 		{
 			cout << "Fumble on d" << right << endl;
 			//fumble
-		}
+		}*/
 		sum += single;
 		single = 0;
 	}

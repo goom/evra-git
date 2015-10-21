@@ -10,6 +10,9 @@
 #include "pugixml.h"
 using namespace std;
 
+
+
+//Token.cpp
 struct Token
 {
 	Token() : kind(0), value(0), name("") { }
@@ -21,8 +24,6 @@ struct Token
 	Token(int ch, double val) :kind(ch), value(val) { }
 	Token(int ch, string st) :kind(ch), name(st) { }
 };
-
-//Token.cpp
 class TokenStream
 {
 protected:
@@ -47,8 +48,19 @@ int random(int hi, int lo = 1);
 void init_utilities();
 int State(int i);
 int State();
+long long genID();
 void SetState(int i);
 string prompt();
+
+class Keywords
+{
+public:
+	vector<short> l;
+
+	int inList(int i); 
+	void add(int i);
+	void remove(int i);
+};
 //Util.cpp
 
 
@@ -69,6 +81,30 @@ int notes_proc(TokenStream& ts);
 //Notes.cpp
 
 
+//Effect.cpp
+struct Effect
+{
+	string sName;
+	int iAux1, iAux2;
+	long long iID;
+	Keywords oKeys;
+
+	friend bool operator==(Effect& x, Effect& y);
+};
+
+class EffectList
+{
+public:
+	vector<Effect> l;
+
+	int inList(Effect &e);
+	int inList(long long id);
+	int inList(string &s);
+	int keyInList(int key);
+};
+//Effect.cpp
+
+
 //Character.cpp
 class Character
 {
@@ -77,6 +113,8 @@ class Character
 	int iSpeed, iSize, iHeight, iWeight;
 	int iBackground;
 	long long iExperience;
+
+	Keywords oKeys;
 
 	int iStrength, iDexterity, iConstitution, iIntelligence, iWisdom, iCharisma;
 	int iHealthBase, iHealthCurrent;

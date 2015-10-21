@@ -1,10 +1,7 @@
 #include "main.h"
 
 using namespace Global;
-namespace
-{
-	
-}
+
 
 int Character::proficiencyBonus()
 {
@@ -99,7 +96,13 @@ int Character::getStat(int stat, int arg)
 			return iCharisma + 0;
 		else
 			return iCharisma;
-
+	case AC:
+		if (arg == COMP)
+			return iBaseAC + getStatMod(DEX);
+		else
+			return iBaseAC;
+	default:
+		return 0;
 	}
 }
 
