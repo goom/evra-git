@@ -125,6 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Character.cpp" />
+    <ClCompile Include="CharacterCreation.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="FileIO.cpp" />
     <ClCompile Include="main.cpp" />
@@ -138,6 +139,11 @@
   <ItemGroup>
     <None Include="..\README.md" />
     <None Include="LICENSE" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Data.txt">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+    </Xml>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

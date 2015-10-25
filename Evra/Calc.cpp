@@ -13,48 +13,21 @@ using namespace Tokens;
 
 namespace
 {
-	struct Variable
-	{
-		string name;
-		double value;
-		Variable(string n, double v) :name(n), value(v) { }
-	};
+	Character temp;
 
-	vector<Variable> names;
-
-	double declaration(TokenStream& ts);
 	double expression(TokenStream& ts);
 	double term(TokenStream& ts);
 	double primary(TokenStream& ts);
 
 	double get_value(string s)
 	{
-		for (int i = 0; i < names.size(); ++i)
-			if (names[i].name == s) return names[i].value;
-		cout << "get_value(): undefined name " << s << endl;
-		return 0;
+		if (s.at(0) == 'm')
+		{
+			s.erase(0);
+			return temp.getStatMod(s);
+		}
+		return temp.getStatValue(s);
 	}
-
-
-	void set_value(string s, double d)
-	{
-		for (int i = 0; i <= names.size(); ++i)
-			if (names[i].name == s)
-			{
-				names[i].value = d;
-				return;
-			}
-		cout << "set: undefined name " << s << endl;
-	}
-
-
-	bool is_declared(string s)
-	{
-		for (int i = 0; i < names.size(); ++i)
-			if (names[i].name == s) return true;
-		return false;
-	}
-
 
 	double primary(TokenStream& ts)
 	{
@@ -153,20 +126,6 @@ namespace
 			}
 		}
 	}
-
-
-	double declaration(TokenStream& ts)
-	{
-		Token t = ts.get();
-		if (t.kind != name) cout << "name expected in declaration" << endl;
-		string name = t.name;
-		if (is_declared(name)) cout << name << " declared twice" << endl;
-		Token t2 = ts.get();
-		if (t2.kind != '=') cout << "= missing in declaration of " << name << endl;
-		double d = expression(ts);
-		names.push_back(Variable(name, d));
-		return 1;
-	}
 }
 
 double calc_proc(const char* c)
@@ -174,15 +133,13 @@ double calc_proc(const char* c)
 	return calc_proc(string(c));
 }
 
-double calc_proc(string& s)
+double calc_proc(string s)
 {
 	TokenStream ts;
 	ts.Clear(s);
 	Token t = ts.get();
 	switch (t.kind)
 	{
-	case let:
-		return declaration(ts);
 	case eof:
 		cout << "Error: EOF in calculate()" << endl;
 		return 1;
@@ -200,9 +157,6 @@ double calc_proc(TokenStream& ts, bool initial)
 		Token t = ts.get();
 		switch (t.kind)
 		{
-		case let:
-			declaration(ts);
-			break;
 		case skip:
 			break;
 		case eof:
@@ -221,4 +175,10 @@ double calc_proc(TokenStream& ts, bool initial)
 	{
 		cerr << e.what() << endl;
 	}
+}
+
+double calcChar(string s, Character &c)
+{
+	temp = c;
+	return calc_proc(s);
 }

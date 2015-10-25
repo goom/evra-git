@@ -8,6 +8,9 @@ int main()
 		string s;
 		TokenStream ts;
 		init_utilities();
+
+		Character testing;
+
 		while (true)
 		{
 			cout << prompt();
@@ -53,7 +56,16 @@ int main()
 					calc_proc(ts, true);
 					break;
 				case States::MAIN:
-					cout << "No such command in MAIN." << endl;
+					switch (t.kind)
+					{
+					case create:
+						testing = createCharacter();
+						break;
+					default:
+						cout << "No such command usable in main menu." << endl;
+						break;
+					}
+					break;
 				default:
 					cout << "Unknown STATE" << endl;
 					break;

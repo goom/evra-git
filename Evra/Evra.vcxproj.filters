@@ -65,6 +65,9 @@
     <ClCompile Include="Effect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CharacterCreation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="LICENSE">
@@ -73,5 +76,10 @@
     <None Include="..\README.md">
       <Filter>Resource Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Data.txt">
+      <Filter>Resource Files</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

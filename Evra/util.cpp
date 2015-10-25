@@ -63,6 +63,7 @@ void init_utilities()
 {
 	rng.seed(time(NULL));
 	SetState(States::MAIN);
+	load();
 }
 
 string prompt()

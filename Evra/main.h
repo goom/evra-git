@@ -10,8 +10,6 @@
 #include "pugixml.h"
 using namespace std;
 
-
-
 //Token.cpp
 struct Token
 {
@@ -42,6 +40,11 @@ public:
 //Token.cpp
 
 
+//FileIO.cpp
+extern pugi::xml_document xmldata;
+void load();
+//FileIO.cpp
+
 //Util.cpp
 int roll(int left, int right);
 int random(int hi, int lo = 1);
@@ -64,10 +67,87 @@ public:
 //Util.cpp
 
 
+//Effect.cpp
+struct Effect
+{
+	string sName;
+	Keywords oKeys;
+	pugi::xml_node oEffect;
+
+	Effect() { }
+	friend bool operator==(Effect& x, Effect& y);
+};
+
+class EffectList
+{
+public:
+	vector<Effect> l;
+
+	int has(Effect &e);
+	int has(string &s);
+	pugi::xml_node getEffect(string &s);
+	vector<pugi::xml_node> findEffects(int id);
+	void addEffect(string &s);
+	void addEffect(Effect &e);
+	void addEffect(pugi::xml_node &n);
+};
+//Effect.cpp
+
+
+//Character.cpp
+struct Stat
+{
+	long long val;
+	string name;
+
+	Stat() :val(0), name("") { }
+	Stat(long long x, string &s) :val(x), name(s) { }
+	Stat(string s) :val(0), name(s) { }
+	Stat(Stat& s) { val = s.val; name = s.name; }
+	Stat operator=(const Stat& s) { val = s.val; name = s.name; return *this; }
+	Stat operator=(const string &s) { val = 0; name = s; return *this; }
+};
+class Character
+{
+	string sName;
+	vector<Stat> vStats;
+	Stat& findStat(const string &s);
+	int hasStat(const string &s);
+
+	string sRace, sClass;
+	pugi::xml_node oRace, oClass;
+
+	Keywords oKeys;
+	EffectList oEffects;
+
+	//Inventory, Effects
+	//Personality Traits
+	//Ideals, Bonds, Flaws
+
+public:
+	Character();
+	
+	int proficiencyBonus();
+	int proficient(string &s);
+	Stat getStat(string &s);
+	long getStatValue(string &s);
+	int getStatMod(string &s);
+	//int savingThrow(int stat, Packet &p);
+	//int skillCheck(int skill, SkillPacket &p);
+};
+//Character.cpp
+
+
+//CharacterCreation.cpp
+Character createCharacter();
+//CharacterCreation.cpp
+
+
 //Calc.cpp
-double calc_proc(string& s);
+double calc_proc(string s);
 double calc_proc(const char* c);
 double calc_proc(TokenStream& ts, bool initial = false);
+double calcChar(const string s, Character &c);
 //Calc.cpp
 
 
@@ -79,62 +159,3 @@ int track_proc(TokenStream& ts);
 //Notes.cpp
 int notes_proc(TokenStream& ts);
 //Notes.cpp
-
-
-//Effect.cpp
-struct Effect
-{
-	string sName;
-	int iAux1, iAux2;
-	long long iID;
-	Keywords oKeys;
-
-	friend bool operator==(Effect& x, Effect& y);
-};
-
-class EffectList
-{
-public:
-	vector<Effect> l;
-
-	int inList(Effect &e);
-	int inList(long long id);
-	int inList(string &s);
-	int keyInList(int key);
-};
-//Effect.cpp
-
-
-//Character.cpp
-class Character
-{
-	string sName;
-	int iLevel, iRace, iClass, iAlignment;
-	int iSpeed, iSize, iHeight, iWeight;
-	int iBackground;
-	long long iExperience;
-
-	Keywords oKeys;
-
-	int iStrength, iDexterity, iConstitution, iIntelligence, iWisdom, iCharisma;
-	int iHealthBase, iHealthCurrent;
-	int iBaseAC;
-
-	//Inventory, Effects
-	//Personality Traits
-	//Ideals, Bonds, Flaws
-
-public:
-	Character() { }
-	
-	int proficiencyBonus();
-	int proficient(int id);
-	int getStat(int stat, int base = Global::COMP);
-	int getStatMod(int stat, int base = Global::COMP);
-	int savingThrow(int stat); 
-	//int savingThrow(int stat, Packet &p);
-	int skillCheck(int skill);
-	//int skillCheck(int skill, SkillPacket &p);
-};
-//Character.cpp
-

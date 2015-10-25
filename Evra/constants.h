@@ -21,20 +21,6 @@ namespace Global
 		HI, HIGH = HI, MAX = HI,
 		COMP, COMPOSITE = COMP,
 
-		//Class
-		BARBARIAN,
-		BARD,
-		CLERIC,
-		DRUID,
-		FIGHTER,
-		MONK,
-		PALADIN,
-		RANGER,
-		ROGUE,
-		SORCERER,
-		WARLOCK,
-		WIZARD,
-
 		//Character Sheet
 		STR, STRENGTH = STR,
 		DEX, DEXTERITY = DEX,
@@ -76,29 +62,6 @@ namespace Global
 		POISON,
 		SONIC, THUNDER = SONIC, SOUND = SONIC,
 
-		//Skills
-		ACROBATICS,
-		ANIMALHANDLING,
-		ARCANA,
-		ATHLETICS,
-		DECEPTION,
-		HISTORY,
-		INSIGHT,
-		INTIMIDATION,
-		INVESTIGATION,
-		MEDICINE,
-		NATURE,
-		PERCEPTION,
-		PERFORMANCE,
-		PERSUASION,
-		RELIGION,
-		SLEIGHTOFHAND,
-		STEALTH,
-		SURVIVAL,
-
-		//Backgrounds
-		ACOLYTE,
-
 		//Alignments
 		TN, TRUENEUTRAL = TN,
 		LN, LAWFULNEUTRAL = LN,
@@ -110,24 +73,11 @@ namespace Global
 		LG, LAWFULGOOD = LG,
 		CG, CHAOTICGOOD = CG,
 
-		//Races
-		HUMAN,
-		DWARF,
-		HALFLING,
-		ELF,
-		HALFELF,
-		HALFORC,
-		GNOME,
-		TEIFLING,
-
 		//Effects
-		EFFECT_ADD_STAT,
-		EFFECT_ADD_STAT_MOD,
-		EFFECT_ADD_PROFICIENCY,
-		EFFECT_ADD_PROFICIENCY_BONUS,
-		EFFECT_ADD_DAMAGE_RESISTANCE,
-		EFFECT_ADD_DAMAGE_IMMUNITY,
-		EFFECT_ADD_CONDITION_IMMUNITY,
+		EFFECT_Proficiency,
+		EFFECT_ModValue,
+		EFFECT_Resist,
+		EFFECT_Advantage,
 	};
 }
 
@@ -157,6 +107,7 @@ namespace Tokens
 		track,
 		state,
 		notes,
+		create,
 
 		//Track
 		list,
