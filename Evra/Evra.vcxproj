@@ -125,11 +125,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Character.cpp" />
-    <ClCompile Include="CharacterCreation.cpp" />
-    <ClCompile Include="Effect.cpp" />
     <ClCompile Include="FileIO.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Notes.cpp" />
+    <ClCompile Include="Testing.cpp" />
     <ClCompile Include="Token.cpp" />
     <ClCompile Include="Track.cpp" />
     <ClCompile Include="pugixml.cpp" />
@@ -141,9 +140,8 @@
     <None Include="LICENSE" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="Data.txt">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
-    </Xml>
+    <Xml Include="Data.xml" />
+    <Xml Include="save.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

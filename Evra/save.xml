@@ -1,0 +1,55 @@
+<Character>
+	<Name />
+	<Race />
+	<Stats>
+		<Stat>
+			<Name>Strength</Name>
+			<Value>8</Value>
+		</Stat>
+		<Stat>
+			<Name>Dexterity</Name>
+			<Value>8</Value>
+		</Stat>
+		<Stat>
+			<Name>Constitution</Name>
+			<Value>8</Value>
+		</Stat>
+		<Stat>
+			<Name>Intelligence</Name>
+			<Value>8</Value>
+		</Stat>
+		<Stat>
+			<Name>Wisdom</Name>
+			<Value>8</Value>
+		</Stat>
+		<Stat>
+			<Name>Charisma</Name>
+			<Value>8</Value>
+		</Stat>
+		<Stat>
+			<Name>Health</Name>
+			<Value>1</Value>
+		</Stat>
+		<Stat>
+			<Name>Max Health</Name>
+			<Value>1</Value>
+		</Stat>
+		<Stat>
+			<Name>Armor Class</Name>
+			<Value>10</Value>
+		</Stat>
+		<Stat>
+			<Name>Level</Name>
+			<Value>1</Value>
+		</Stat>
+		<Stat>
+			<Name>Experience</Name>
+			<Value>0</Value>
+		</Stat>
+	</Stats>
+	<Class />
+	<Traits />
+	<Feats />
+	<Items />
+	<Effects />
+</Character>

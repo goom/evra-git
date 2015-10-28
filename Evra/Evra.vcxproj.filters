@@ -62,10 +62,7 @@
     <ClCompile Include="Character.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Effect.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CharacterCreation.cpp">
+    <ClCompile Include="Testing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -78,7 +75,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="Data.txt">
+    <Xml Include="Data.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="save.xml">
       <Filter>Resource Files</Filter>
     </Xml>
   </ItemGroup>

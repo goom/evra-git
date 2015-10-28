@@ -2,6 +2,11 @@
 Just a self project
 
 
+//28 Oct 15
+Almost completely rewrote Character class; heavy implentation of XML data.
+-Need to add <Conditions> field to Effects, and an evaluateConditions() function to the Character class
+-Need to finish the testing module and ensure that effect checking is working as intended
+
 //5 Sep 15
 Ceompleted Track mode;
 -Delete a range of tracks
@@ -15,7 +20,6 @@ Added more functionality to the Track mode;
 Added functionality to the token system;
 -Allows for numbers in a name or string
 	-Any number immediately following a sole 'd' will be treated as a separate number, not a part of the string (for rolling)
-
 
 //31 Aug 15
 Modified the TokenStream class for greater extensibility, setup for future program modes

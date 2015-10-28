@@ -9,7 +9,18 @@ namespace States
 		CALC,
 		TRACKER,
 		MAIN,
+		TEST,
 	};
+}
+
+namespace Effects
+{
+	constexpr char Proficieny[] = "Proficiency";
+	constexpr char Value[] = "Value";
+	constexpr char Advantage[] = "Advantage";
+	constexpr char Resist[] = "Resist";
+	constexpr char AllowUse[] = "AllowUse";
+	constexpr char AllowEquip[] = "AllowEquip";
 }
 
 namespace Global
@@ -108,6 +119,10 @@ namespace Tokens
 		state,
 		notes,
 		create,
+		test,
+
+		//Test
+		make,
 
 		//Track
 		list,

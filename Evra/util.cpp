@@ -76,6 +76,8 @@ string prompt()
 		return string("Calc> ");
 	case States::TRACKER:
 		return string("Trck> ");
+	case States::TEST:
+		return string("Test> ");
 	default:
 		return string("> ");
 	}

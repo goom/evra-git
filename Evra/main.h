@@ -41,7 +41,7 @@ public:
 
 
 //FileIO.cpp
-extern pugi::xml_document xmldata;
+extern pugi::xml_node xmldata;
 void load();
 //FileIO.cpp
 
@@ -67,80 +67,46 @@ public:
 //Util.cpp
 
 
-//Effect.cpp
+//Character.cpp
 struct Effect
 {
-	string sName;
-	Keywords oKeys;
-	pugi::xml_node oEffect;
-
-	Effect() { }
-	friend bool operator==(Effect& x, Effect& y);
-};
-
-class EffectList
-{
-public:
-	vector<Effect> l;
-
-	int has(Effect &e);
-	int has(string &s);
-	pugi::xml_node getEffect(string &s);
-	vector<pugi::xml_node> findEffects(int id);
-	void addEffect(string &s);
-	void addEffect(Effect &e);
-	void addEffect(pugi::xml_node &n);
-};
-//Effect.cpp
-
-
-//Character.cpp
-struct Stat
-{
-	long long val;
-	string name;
-
-	Stat() :val(0), name("") { }
-	Stat(long long x, string &s) :val(x), name(s) { }
-	Stat(string s) :val(0), name(s) { }
-	Stat(Stat& s) { val = s.val; name = s.name; }
-	Stat operator=(const Stat& s) { val = s.val; name = s.name; return *this; }
-	Stat operator=(const string &s) { val = 0; name = s; return *this; }
+	string type;
+	pugi::xml_node me;
+	pugi::xml_node *owner;
 };
 class Character
 {
-	string sName;
-	vector<Stat> vStats;
-	Stat& findStat(const string &s);
-	int hasStat(const string &s);
-
-	string sRace, sClass;
-	pugi::xml_node oRace, oClass;
-
-	Keywords oKeys;
-	EffectList oEffects;
-
-	//Inventory, Effects
-	//Personality Traits
-	//Ideals, Bonds, Flaws
+private:
+	pugi::xml_document oData;
+	vector<Effect> oEffects;
 
 public:
 	Character();
-	
+    Character& operator=(Character c) { oData.reset(c.oData); return *this; }
+
+
 	int proficiencyBonus();
 	int proficient(string &s);
-	Stat getStat(string &s);
+
+	int hasEffect(string &s);
+	int hasEffect(char *t);
+	Effect& addEffect(pugi::xml_node &e, pugi::xml_node *own = NULL);
+
+	pugi::xml_node& getStat(const string &s);
 	long getStatValue(string &s);
+	void setStatValue(string &s, long val);
 	int getStatMod(string &s);
+
+	void save();
 	//int savingThrow(int stat, Packet &p);
 	//int skillCheck(int skill, SkillPacket &p);
 };
 //Character.cpp
 
 
-//CharacterCreation.cpp
-Character createCharacter();
-//CharacterCreation.cpp
+//Testing
+void test_proc(TokenStream &ts);
+//Testing
 
 
 //Calc.cpp

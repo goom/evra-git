@@ -13,7 +13,7 @@ using namespace Tokens;
 
 namespace
 {
-	Character temp;
+	Character *temp;
 
 	double expression(TokenStream& ts);
 	double term(TokenStream& ts);
@@ -24,9 +24,9 @@ namespace
 		if (s.at(0) == 'm')
 		{
 			s.erase(0);
-			return temp.getStatMod(s);
+			return temp->getStatMod(s);
 		}
-		return temp.getStatValue(s);
+		return temp->getStatValue(s);
 	}
 
 	double primary(TokenStream& ts)
@@ -179,6 +179,6 @@ double calc_proc(TokenStream& ts, bool initial)
 
 double calcChar(string s, Character &c)
 {
-	temp = c;
+	temp = &c;
 	return calc_proc(s);
 }

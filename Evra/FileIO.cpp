@@ -2,7 +2,8 @@
 #include "pugixml.h"
 using namespace pugi;
 
-xml_document xmldata;
+xml_node xmldata;
+xml_document xmldoc;
 
 namespace
 {
@@ -13,7 +14,8 @@ void load()
 {
 	try
 	{
-		static xml_parse_result r = xmldata.load_file("Data.txt");
+		static xml_parse_result r = xmldoc.load_file("Data.xml");
+		xmldata = xmldoc.child("Data");
 
 		if (!r)
 		{

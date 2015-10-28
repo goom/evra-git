@@ -9,8 +9,6 @@ int main()
 		TokenStream ts;
 		init_utilities();
 
-		Character testing;
-
 		while (true)
 		{
 			cout << prompt();
@@ -45,6 +43,9 @@ int main()
 				//I know shouldn't do this. Go die.
 				system("cls");
 				break;
+			case test:
+				SetState(States::TEST);
+				break;
 			default:
 				ts.Clear(s);
 				switch (State())
@@ -58,8 +59,8 @@ int main()
 				case States::MAIN:
 					switch (t.kind)
 					{
-					case create:
-						testing = createCharacter();
+					case test:
+						test_proc(ts);
 						break;
 					default:
 						cout << "No such command usable in main menu." << endl;
