@@ -140,7 +140,10 @@
     <None Include="LICENSE" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="Data.xml" />
+    <Xml Include="Data.xml">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <SubType>Designer</SubType>
+    </Xml>
     <Xml Include="save.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

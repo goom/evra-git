@@ -56,12 +56,12 @@ int main()
 				case States::CALC:
 					calc_proc(ts, true);
 					break;
+				case States::TEST:
+					test_proc(ts);
+					break;
 				case States::MAIN:
 					switch (t.kind)
 					{
-					case test:
-						test_proc(ts);
-						break;
 					default:
 						cout << "No such command usable in main menu." << endl;
 						break;

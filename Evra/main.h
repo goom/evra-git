@@ -6,6 +6,7 @@
 #include <ctime>
 #include <random>
 #include <algorithm>
+#include <cctype>
 #include "constants.h"
 #include "pugixml.h"
 using namespace std;
@@ -54,6 +55,7 @@ int State();
 long long genID();
 void SetState(int i);
 string prompt();
+string trim(const string &s);
 
 class Keywords
 {
@@ -84,20 +86,33 @@ public:
 	Character();
     Character& operator=(Character c) { oData.reset(c.oData); return *this; }
 
-
+	// Returns the value of (Level -10) / 4 + 2
 	int proficiencyBonus();
+
+	// Compares s to the name of a skill, returns level of proficiency (1 is proficient, 2 is expert, 3 is master)
 	int proficient(string &s);
 
+	// Returns 1 is specified effect is stored in the oEffects list
 	int hasEffect(string &s);
 	int hasEffect(char *t);
+
+	// Add an effect to the oEffects list. Returns a reference to that effect
 	Effect& addEffect(pugi::xml_node &e, pugi::xml_node *own = NULL);
 
-	pugi::xml_node& getStat(const string &s);
+	// Clears oEffects list and rebuilds it based on race, class, actives
+	void reloadEffects();
+
+	pugi::xml_node getStat(const string &s);
 	long getStatValue(string &s);
 	void setStatValue(string &s, long val);
 	int getStatMod(string &s);
 
+	//Saves the character to save.xml
 	void save();
+
+	//Sets race to s. Set sub to true to set subrace.
+	void setRace(string &s, bool sub = false);
+
 	//int savingThrow(int stat, Packet &p);
 	//int skillCheck(int skill, SkillPacket &p);
 };

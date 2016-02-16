@@ -1,6 +1,12 @@
 # evra-git
 Just a self project
 
+//16 Feb 16
+Solved some problems, found some others. One of the data structures (oData or xmldata) needs to have its PCDATA notes trimmed() in order for string comparison to work...
+Also, getStatValue is returning incorrect stat. (not checking through effects)
+
+//1 Nov 15
+Some inherint difference between pugixml::char_t* and string.c_str().... They don't return the same values, even though they appear the same.
 
 //28 Oct 15
 Almost completely rewrote Character class; heavy implentation of XML data.

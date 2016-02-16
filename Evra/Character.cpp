@@ -11,35 +11,131 @@ namespace
 
 Character::Character()
 {
-	xml_node &node = oData.append_child("Character");
-	node.append_child("Name");
-	node.append_child("Race");
-	node.append_child("Stats");
+	oData.append_child("Name");
+	oData.append_child("Race");
+	oData.append_child("Subrace");
+	oData.append_child("Stats");
 	for (auto x : xmldata.child("Stats").children("Stat"))
-		node.child("Stats").append_copy(x).remove_child("Short");
-	node.append_child("Class");
-	node.append_child("Traits");
-	node.append_child("Feats");
-	node.append_child("Items");
-	node.append_child("Effects");
+		oData.child("Stats").append_copy(x);
+	oData.append_child("Class");
+	oData.append_child("Effects");
 }
 
-xml_node& Character::getStat(const string &s)
+xml_node Character::getStat(const string &s)
 {
-	return oData.child("Character").child("Stats").child(s.c_str());
+	xml_node t = oData.child("Stats").find_child_by_attribute("id", s.c_str());
+	if (t)
+		return t;
+	else
+		for (auto &x : oData.child("Stats").children("Stat"))
+			if (x.child_value("Name") == s.c_str())
+				return x;
+	
+	throw runtime_error("No such stat in getStat");
+	return t;
 }
 
 int Character::proficiencyBonus()
 {
-	return (((calcChar(getStat("Level").child_value(), *this) - 1) / 4) + 2);
+	return (((calcChar(getStat("LVL").child_value(), *this) - 1) / 4) + 2);
+}
+
+void Character::setRace(string &s, bool sub)
+{
+	int i = 1;
+
+	if (sub)
+	{
+		for (auto &x : xmldata.child("Races").children("Race"))
+		{
+			for (auto &y : x.child("Subraces").children("Subrace"))
+			{
+				if (s == trim(y.child_value("Name")))
+				{
+					if (oData.child("Subrace").first_child())
+						oData.child("Subrace").first_child().set_value(y.child_value("Name"));
+					else
+						oData.child("Subrace").append_child(xml_node_type::node_pcdata).set_value(y.child_value("Name"));
+					reloadEffects();
+					return;
+				}
+			}
+		}
+	}
+	else
+	{
+		for (auto &x : xmldata.child("Races").children("Race"))
+		{
+			if (s == x.child_value("Name"))
+			{
+				/*if (oData.child_value("Race"))
+					oData.child("Race").first_child().set_value(x.child_value("Name"));
+				else*/
+					oData.child("Race").append_child(xml_node_type::node_pcdata).set_value(x.child_value("Name"));
+					if (s == oData.child_value("Race"))
+						cout << "Yay!" << endl;
+				reloadEffects();
+				return;
+			}
+		}
+	}
+
+	cout << "No such race... dumb dumb." << endl;
+}
+
+void Character::reloadEffects()
+{
+	oEffects.clear();
+	Effect t;
+	xml_node *e;
+
+	for (auto &x : xmldata.child("Races").children("Race"))
+	{
+		if (trim(x.child_value("Name")) == oData.child_value("Race"))
+		{
+			for (auto &y : x.child("Passives").children("Passive"))
+			{
+				e = &xmldata.child("Passives").find_child_by_attribute("id", y.attribute("id").value());
+				for (auto &z : e->children("Effect"))
+				{
+					t.type = z.attribute("type").value();
+					t.me = z;
+					t.owner = e;
+					oEffects.push_back(t);
+				}
+			}
+
+			//subrace
+			for (auto &a : x.child("Subraces").children("Subrace"))
+			{
+				if (a.child_value("Name") == trim(oData.child_value("Subrace")))
+				{
+					for (auto &b : a.child("Passives").children("Passive"))
+					{
+						e = &xmldata.child("Passives").find_child_by_attribute("id", b.attribute("id").value());
+						for (auto &c : e->children("Effect"))
+						{
+							t.type = c.attribute("type").value();
+							t.me = c;
+							t.owner = e;
+							oEffects.push_back(t);
+						}
+					}
+					break;
+				}
+			}
+			break;
+		}
+	}
+	//load from other places?
 }
 
 int Character::proficient(string &s)
 {
 	for (auto &x : oEffects)
-		if (x.type == "Proficiency")
+		if (trim(x.type) == "Proficiency")
 			for(auto &y : x.me.children("With"))
-				if(y.child_value() == s.c_str())
+				if(y.child_value() == s)
 					return 1;
 	//Need to to have some way of check the <Against> keys
 	//Possibly passing some sort of packet instead of a string?
@@ -50,7 +146,8 @@ int Character::proficient(string &s)
 long Character::getStatValue(string &s)
 {
 	long val = 0;
-	val += calcChar(getStat(s).child_value(), *this);
+	xml_node &temp = getStat(s);
+	val += calcChar(temp.child_value("Value"), *this);
 
 	if (!stop_feedback_loop && hasEffect("Value"))
 	{
@@ -58,7 +155,7 @@ long Character::getStatValue(string &s)
 
 		for (auto &x : oEffects)
 			if (x.type == "Value")
-				if (x.me.child_value("Stat") == s.c_str())
+				if (x.me.child_value("Stat") == temp.attribute("id").value() || x.me.child_value("Stat") == temp.child_value("Name"))
 					val += calcChar(x.me.child_value("Value"), *this);
 	}
 
@@ -68,12 +165,7 @@ long Character::getStatValue(string &s)
 
 void Character::setStatValue(string &s, long val)
 {
-	for (auto &x : oData.child("Stats").children("Stat"))
-		if (x.child("Name").value() == s)
-		{
-			x.child("Value").first_child().set_value(to_string(val).c_str());
-			return;
-		}
+	oData.child("Stat").find_child_by_attribute("id", s.c_str()).child("Value").first_child().set_value(to_string(val).c_str());
 }
 
 int Character::getStatMod(string &s)

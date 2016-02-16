@@ -1,66 +1,55 @@
 <Data>
   <Stats>
-    <Stat>
+    <Stat id="STR">
       <Name>Strength</Name>
-      <Short>STR</Short>
       <Value>8</Value>
     </Stat>
-    <Stat>
+    <Stat id="DEX">
       <Name>Dexterity</Name>
-      <Short>DEX</Short>
       <Value>8</Value>
     </Stat>
-    <Stat>
+    <Stat id="CON">
       <Name>Constitution</Name>
-      <Short>CON</Short>
       <Value>8</Value>
     </Stat>
-    <Stat>
+    <Stat id="INT">
       <Name>Intelligence</Name>
-      <Short>INT</Short>
       <Value>8</Value>
     </Stat>
-    <Stat>
+    <Stat id="WIS">
       <Name>Wisdom</Name>
-      <Short>WIS</Short>
       <Value>8</Value>
     </Stat>
-    <Stat>
+    <Stat id="CHA">
       <Name>Charisma</Name>
-      <Short>CHA</Short>
       <Value>8</Value>
     </Stat>
-    <Stat>
+    <Stat id="HP">
       <Name>Health</Name>
-      <Short>HP</Short>
       <Value>1</Value>
     </Stat>
-    <Stat>
-      <Name>MaxHealth</Name>
-      <Short>MHP</Short>
+    <Stat id="MHP">
+      <Name>Max Health</Name>
       <Value>1</Value>
     </Stat>
-    <Stat>
-      <Name>ArmorClass</Name>
-      <Short>AC</Short>
+    <Stat id="AC">
+      <Name>Armor Class</Name>
       <Value>10</Value>
     </Stat>
-    <Stat>
+    <Stat id="LVL">
       <Name>Level</Name>
-      <Short>LVL</Short>
       <Value>1</Value>
     </Stat>
-    <Stat>
+    <Stat id="EXP">
       <Name>Experience</Name>
-      <Short>EXP</Short>
       <Value>0</Value>
     </Stat>
   </Stats>
   <Races>
-    <Race>
+    <Race id="1">
       <Name>Dwarf</Name>
       <Type>Humanoid</Type>
-      <Description>Bold and hardy, dwarves are known as skilled warriors, miners, and workers of stone and metal. Though they stand well under 5 feet tall, dwarves are so broad and compact that they can weigh as much as a human standing nearly two feet taller. Their courage and endurance are also easily a match for any of the larger folk. Dwarven skin ranges from deep brown to a paler hue tinged with red, but the most common shades are light brown or deep tan, like certain tones of earth. Their hair, worn long but in simple styles, is usually black, gray, or brown, though paler dwarves often have red har. Male dwarves value their beards highlt and groom them carefully. </Description>
+      <Description>Bold and hardy, dwarves are known as skilled warriors, miners, and workers of stone and metal. Though they stand well under 5 feet tall, dwarves are so broad and compact that they can weigh as much as a human standing nearly two feet taller. Their courage and endurance are also easily a match for any of the larger folk. Dwarven skin ranges from deep brown to a paler hue tinged with red, but the most common shades are light brown or deep tan, like certain tones of earth. Their hair, worn long but in simple styles, is usually black, gray, or brown, though paler dwarves often have red har. Male dwarves value their beards highly and groom them carefully. </Description>
       <Height>
         <Min>36</Min>
         <Max>60</Max>
@@ -91,20 +80,20 @@
         <Write>1</Write>
         <Speak>1</Speak>
       </Language>
-      <Traits>
+      <Passives>
         <Passive id="tDwarfCon"/>
         <Passive id="tDwarfPoison"/>
         <Passive id="tDwarfAxeHammer"/>
         <Passive id="tDwarfStone"/>
-      </Traits>
+      </Passives>
       <Subraces>
-        <Subrace>
+        <Subrace id="1">
           <Name>Hill Dwarf</Name>
           <Description>As a hill dwarf, you have keen senses, deep intuition, and remarkable resilience.</Description>
           <Passive id="tDwarfHillWis"/>
           <Passive id="tDwarfHillHP"/>
         </Subrace>
-        <Subrace>
+        <Subrace id="2">
           <Name>Mountain Dwarf</Name>         
           <Description>As a mountain dwarf, you're strong and hardy, accustomed to a difficult life in rugged terrain. You're probable on the tall side (for a dwarf), and tend toward lighter coloration.</Description>
           <Passive id="tDwarfMtnStr"/>

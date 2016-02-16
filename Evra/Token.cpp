@@ -124,6 +124,7 @@ Token TokenStream::StrHandler(string &s)
 	if (s == "remove" || s == "del" || s == "delete") return Token(Tokens::remove);
 	if (s == "d") return Token(dice);
 	if (s == "let") return Token(let);
-	if (s == "create") return Token(create);
+	if (s == "create" || s == "make") return Token(create);
+	if (s == "test" || s == "testing") return Token(test);
 	return Token(name, s);
 }
