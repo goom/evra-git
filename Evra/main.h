@@ -79,12 +79,13 @@ struct Effect
 class Character
 {
 private:
-	pugi::xml_document oData;
+	pugi::xml_document oDoc;
+	pugi::xml_node oData;
 	vector<Effect> oEffects;
 
 public:
 	Character();
-    Character& operator=(Character c) { oData.reset(c.oData); return *this; }
+    Character& operator=(Character c) { oDoc.reset(c.oDoc); return *this; }
 
 	// Returns the value of (Level -10) / 4 + 2
 	int proficiencyBonus();
@@ -112,6 +113,9 @@ public:
 
 	//Sets race to s. Set sub to true to set subrace.
 	void setRace(string &s, bool sub = false);
+
+	//Fairly self-explanatory
+	void setName(string &s);
 
 	//int savingThrow(int stat, Packet &p);
 	//int skillCheck(int skill, SkillPacket &p);

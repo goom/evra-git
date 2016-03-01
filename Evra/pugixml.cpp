@@ -22,6 +22,17 @@
 #include <assert.h>
 #include <limits.h>
 
+//---------My stuff
+#include <algorithm>
+#include <cctype>
+std::string pugi_trim(const std::string &s)
+{
+	auto wsfront = std::find_if_not(s.begin(), s.end(), [](int c) {return std::isspace(c); });
+	auto wsback = std::find_if_not(s.rbegin(), s.rend(), [](int c) {return std::isspace(c); }).base();
+	return (wsback <= wsfront ? std::string() : std::string(wsfront, wsback));
+}
+//------------------
+
 #ifdef PUGIXML_WCHAR_MODE
 #	include <wchar.h>
 #endif
@@ -5082,12 +5093,12 @@ namespace pugi
 
 	PUGI__FN const char_t* xml_attribute::name() const
 	{
-		return (_attr && _attr->name) ? _attr->name + 0 : PUGIXML_TEXT("");
+		return pugi_trim((_attr && _attr->name) ? _attr->name + 0 : PUGIXML_TEXT("")).c_str();
 	}
 
 	PUGI__FN const char_t* xml_attribute::value() const
 	{
-		return (_attr && _attr->value) ? _attr->value + 0 : PUGIXML_TEXT("");
+		return pugi_trim((_attr && _attr->value) ? _attr->value + 0 : PUGIXML_TEXT("")).c_str();
 	}
 
 	PUGI__FN size_t xml_attribute::hash_value() const
@@ -5331,7 +5342,7 @@ namespace pugi
 
 	PUGI__FN const char_t* xml_node::value() const
 	{
-		return (_root && _root->value) ? _root->value + 0 : PUGIXML_TEXT("");
+		return pugi_trim((_root && _root->value) ? _root->value + 0 : PUGIXML_TEXT("")).c_str();
 	}
 
 	PUGI__FN xml_node xml_node::child(const char_t* name_) const
@@ -5442,7 +5453,7 @@ namespace pugi
 
 		for (xml_node_struct* i = _root->first_child; i; i = i->next_sibling)
 			if (impl::is_text_node(i) && i->value)
-				return i->value;
+				return pugi_trim(i->value).c_str();
 
 		return PUGIXML_TEXT("");
 	}

@@ -1,55 +1,53 @@
 <Character>
-	<Name />
+	<Name>qwe</Name>
 	<Race />
+	<Subrace />
 	<Stats>
-		<Stat>
+		<Stat id="STR">
 			<Name>Strength</Name>
 			<Value>8</Value>
 		</Stat>
-		<Stat>
+		<Stat id="DEX">
 			<Name>Dexterity</Name>
 			<Value>8</Value>
 		</Stat>
-		<Stat>
+		<Stat id="CON">
 			<Name>Constitution</Name>
 			<Value>8</Value>
 		</Stat>
-		<Stat>
+		<Stat id="INT">
 			<Name>Intelligence</Name>
 			<Value>8</Value>
 		</Stat>
-		<Stat>
+		<Stat id="WIS">
 			<Name>Wisdom</Name>
 			<Value>8</Value>
 		</Stat>
-		<Stat>
+		<Stat id="CHA">
 			<Name>Charisma</Name>
 			<Value>8</Value>
 		</Stat>
-		<Stat>
+		<Stat id="HP">
 			<Name>Health</Name>
 			<Value>1</Value>
 		</Stat>
-		<Stat>
+		<Stat id="MHP">
 			<Name>Max Health</Name>
 			<Value>1</Value>
 		</Stat>
-		<Stat>
+		<Stat id="AC">
 			<Name>Armor Class</Name>
 			<Value>10</Value>
 		</Stat>
-		<Stat>
+		<Stat id="LVL">
 			<Name>Level</Name>
 			<Value>1</Value>
 		</Stat>
-		<Stat>
+		<Stat id="EXP">
 			<Name>Experience</Name>
 			<Value>0</Value>
 		</Stat>
 	</Stats>
 	<Class />
-	<Traits />
-	<Feats />
-	<Items />
 	<Effects />
 </Character>

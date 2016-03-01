@@ -1,6 +1,9 @@
 # evra-git
 Just a self project
 
+//17 Feb 16
+Finally solved the getStatValue crap; more issues with extra whitespaces at the beginning or end of the pugi::char_t strings. That is annoying.
+
 //16 Feb 16
 Solved some problems, found some others. One of the data structures (oData or xmldata) needs to have its PCDATA notes trimmed() in order for string comparison to work...
 Also, getStatValue is returning incorrect stat. (not checking through effects)

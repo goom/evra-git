@@ -11,6 +11,7 @@ namespace
 
 Character::Character()
 {
+	oData = oDoc.append_child("Character");
 	oData.append_child("Name");
 	oData.append_child("Race");
 	oData.append_child("Subrace");
@@ -50,10 +51,10 @@ void Character::setRace(string &s, bool sub)
 		{
 			for (auto &y : x.child("Subraces").children("Subrace"))
 			{
-				if (s == trim(y.child_value("Name")))
+				if (s == y.child_value("Name"))
 				{
-					if (oData.child("Subrace").first_child())
-						oData.child("Subrace").first_child().set_value(y.child_value("Name"));
+					if (oData.child("Subrace").first_child().type() == xml_node_type::node_pcdata)
+						oData.child("Subrace").first_child().set_value(x.child_value("Name"));
 					else
 						oData.child("Subrace").append_child(xml_node_type::node_pcdata).set_value(y.child_value("Name"));
 					reloadEffects();
@@ -66,14 +67,13 @@ void Character::setRace(string &s, bool sub)
 	{
 		for (auto &x : xmldata.child("Races").children("Race"))
 		{
-			if (s == x.child_value("Name"))
+			if (s == string(x.child_value("Name")))
 			{
-				/*if (oData.child_value("Race"))
+				if (oData.child("Race").first_child().type() == xml_node_type::node_pcdata)
 					oData.child("Race").first_child().set_value(x.child_value("Name"));
-				else*/
+				else
 					oData.child("Race").append_child(xml_node_type::node_pcdata).set_value(x.child_value("Name"));
 					if (s == oData.child_value("Race"))
-						cout << "Yay!" << endl;
 				reloadEffects();
 				return;
 			}
@@ -91,7 +91,7 @@ void Character::reloadEffects()
 
 	for (auto &x : xmldata.child("Races").children("Race"))
 	{
-		if (trim(x.child_value("Name")) == oData.child_value("Race"))
+		if (x.child_value("Name") == oData.child_value("Race"))
 		{
 			for (auto &y : x.child("Passives").children("Passive"))
 			{
@@ -108,7 +108,7 @@ void Character::reloadEffects()
 			//subrace
 			for (auto &a : x.child("Subraces").children("Subrace"))
 			{
-				if (a.child_value("Name") == trim(oData.child_value("Subrace")))
+				if (a.child_value("Name") == oData.child_value("Subrace"))
 				{
 					for (auto &b : a.child("Passives").children("Passive"))
 					{
@@ -133,7 +133,7 @@ void Character::reloadEffects()
 int Character::proficient(string &s)
 {
 	for (auto &x : oEffects)
-		if (trim(x.type) == "Proficiency")
+		if (x.type == "Proficiency")
 			for(auto &y : x.me.children("With"))
 				if(y.child_value() == s)
 					return 1;
@@ -175,7 +175,7 @@ int Character::getStatMod(string &s)
 
 void Character::save()
 {
-	if(!oData.save_file("save.xml", "\t", pugi::format_no_declaration | pugi::format_save_file_text | pugi::format_indent))
+	if(!oDoc.save_file("save.xml", "\t", pugi::format_no_declaration | pugi::format_save_file_text | pugi::format_indent))
 		cout << "Character save unsuccessful" << endl;
 }
 
@@ -203,4 +203,12 @@ Effect& Character::addEffect(xml_node &e, xml_node *own)
 
 	oEffects.push_back(temp);
 	return oEffects.back();
+}
+
+void Character::setName(string &s)
+{
+	if (oData.child("Name").first_child().type() == xml_node_type::node_pcdata)
+		oData.child("Race").first_child().set_value(s.c_str());
+	else
+		oData.child("Name").append_child(xml_node_type::node_pcdata).set_value(s.c_str());
 }

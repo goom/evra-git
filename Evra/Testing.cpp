@@ -12,11 +12,12 @@ namespace
 		cout << "Enter a name: ";
 		cin >> sI;
 		
+		characterTest.setName(sI);
 		characterTest.setRace(string("Dwarf"));
 		characterTest.setRace(string("Hill Dwarf"), true);
-		cout << "You are a Hill Dwarf." << endl;
 
-		cout << "You have " << characterTest.getStatValue(string("CON")) << " constitution." << endl;
+		characterTest.save();
+		cout << "Success?" << endl;
 	}
 }
 
